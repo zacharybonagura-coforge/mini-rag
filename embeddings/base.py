@@ -1,5 +1,8 @@
-from typing import Protocol, Sequence
+from collections.abc import Sequence
+from typing import Protocol
+
 from pydantic import BaseModel
+
 
 class Chunk(BaseModel):
     chunk_id: str
