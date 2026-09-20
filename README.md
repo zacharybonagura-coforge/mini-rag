@@ -131,6 +131,10 @@ Also confirm:
 - `distance` values are numbers and increase down the list
 - supported answers include `citation` with document, version, and section
 
+## Results
+Readable writeup: [`docs/eval-run.md`](docs/eval-run.md)
+
+
 ## Project layout
 ```text
 src/
