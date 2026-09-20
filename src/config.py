@@ -27,5 +27,5 @@ def load_settings() -> Settings:
         ollama_host=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
         database_url=os.getenv("DATABASE_URL"),
         policy_path=os.getenv("POLICY_PATH", "policy.md"),
-        retrieve_k=int(os.getenv("RETRIEVE_K", "1")),
+        retrieve_k=int(os.getenv("RETRIEVE_K", "3")),
     )
