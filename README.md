@@ -153,6 +153,21 @@ sql/init.sql           # Postgres schema (DB container only)
 Dockerfile             # app image -> python src/run.py
 ```
 
+## Development checks
+
+From the repo root with the venv active:
+
+```bash
+# Unit tests
+PYTHONPATH=src pytest
+
+# Type check
+python -m mypy .
+
+# Lint
+python -m ruff check .
+```
+
 ## Troubleshooting
 | Symptom | Fix |
 |---|---|
