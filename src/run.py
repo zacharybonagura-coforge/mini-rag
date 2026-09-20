@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from adapters import build_embedder, build_generator, build_store
@@ -24,6 +25,7 @@ def main() -> None:
     if not store.load_chunks():
         ingest(Path(settings.policy_path), embedder, store)
 
+    results = []
     for question in QUESTIONS:
         response = generate(
             question,
@@ -32,9 +34,19 @@ def main() -> None:
             store,
             k=settings.retrieve_k,
         )
+        record = {
+            "question": question,
+            **response.model_dump(),
+        }
+        results.append(record)
         print(question)
-        print(response.model_dump_json(indent=2))
+        print(json.dumps(record, indent=2))
         print()
+
+    output_path = Path(settings.output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(results, indent=2) + "\n")
+    print(f"Wrote {output_path}")
 
 
 if __name__ == "__main__":

@@ -16,6 +16,7 @@ class Settings:
     database_url: str
     policy_path: str
     retrieve_k: int
+    output_path: str
 
 
 def load_settings() -> Settings:
@@ -39,4 +40,5 @@ def load_settings() -> Settings:
         ),
         policy_path=os.getenv("POLICY_PATH", "policy.md"),
         retrieve_k=int(os.getenv("RETRIEVE_K", "3")),
+        output_path=os.getenv("OUTPUT_PATH", "runs/eval-run.json"),
     )

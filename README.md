@@ -68,6 +68,7 @@ pip install -r requirements.txt
 | `DATABASE_URL` | `postgresql://rag:rag@localhost:5432/mini_rag` | Postgres DSN for pgvector (use `host.docker.internal` from the app container) |
 | `POLICY_PATH` | `policy.md` | Path to the policy markdown file |
 | `RETRIEVE_K` | `3` | Number of nearest chunks to return |
+| `OUTPUT_PATH` | `runs/eval-run.json` | Where `run.py` writes the six-question JSON results |
 
 Provider values are validated as enums in `config.py` (`EmbeddingProvider`, `GenerationProvider`, `StoreProvider`). Allowed values today: `ollama` (embed/generate), `pgvector` (store). Anything else fails at settings load.
 
