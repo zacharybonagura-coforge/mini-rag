@@ -11,7 +11,7 @@ class Settings:
     generation_model: str
     store_provider: str
     ollama_host: str
-    database_url: str | None
+    database_url: str
     policy_path: str
     retrieve_k: int
 
@@ -25,7 +25,10 @@ def load_settings() -> Settings:
         generation_model=os.getenv("GENERATION_MODEL", "mistral:7b"),
         store_provider=os.getenv("STORE_PROVIDER", "pgvector"),
         ollama_host=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
-        database_url=os.getenv("DATABASE_URL"),
+        database_url=os.getenv(
+            "DATABASE_URL",
+            "postgresql://rag:rag@localhost:5432/mini_rag",
+        ),
         policy_path=os.getenv("POLICY_PATH", "policy.md"),
         retrieve_k=int(os.getenv("RETRIEVE_K", "3")),
     )
