@@ -1,0 +1,3 @@
+from psycopg import Connection
+
+def register_vector(conn: Connection) -> None: ...
