@@ -1,10 +1,9 @@
-from pathlib import Path
 
-from embeddings.base import Chunk, ScoredChunk
+from embeddings.base import Chunk, EmbeddingAdapter, ScoredChunk
 from generation.base import ModelAdapter
-from ingest import ingest
 from response import Citation, RagResponse, RetrievedChunkRef
 from retrieve import retrieve
+from store.base import VectorStoreAdapter
 
 INSTRUCTION = """\
 You are given a policy excerpt. Apply that excerpt to the question.
@@ -79,28 +78,13 @@ def to_response(answer: str, chunks: list[ScoredChunk]) -> RagResponse:
     )
 
 
-QUESTIONS = [
-    "How much can I spend on food each day?",
-    "Can I book first-class airfare?",
-    "My hotel costs $250. What do I need?",
-    "Do I need a receipt for a $20 taxi?",
-    "Can I claim a limousine upgrade?",
-    "Does the company reimburse gym memberships?",
-]
-
-
-if __name__ == "__main__":
-    from adapters import build_embedder, build_generator, build_store
-    from config import load_settings
-    settings = load_settings()
-    embedder = build_embedder(settings)
-    generator = build_generator(settings)
-    store = build_store(settings)
-    if not store.load_chunks():
-        ingest(Path(settings.policy_path), embedder, store)
-    for question in QUESTIONS:
-        retrieved = retrieve(question, embedder, store, settings.retrieve_k)
-        answer = generate_answer(question, retrieved, generator)
-        print(question)
-        print(to_response(answer, retrieved).model_dump_json(indent=2))
-        print()
+def generate(
+    question: str,
+    embedder: EmbeddingAdapter,
+    generator: ModelAdapter,
+    store: VectorStoreAdapter,
+    k: int
+) -> RagResponse:
+    retrieved = retrieve(question, embedder, store, k=k)
+    answer = generator.generate(build_prompt(question, retrieved))
+    return to_response(answer, retrieved)

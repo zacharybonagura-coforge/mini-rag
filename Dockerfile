@@ -10,4 +10,4 @@ COPY policy.md .
 
 ENV PYTHONPATH=/app/src
 
-CMD ["python", "src/generate.py"]
+CMD ["python", "src/run.py"]
