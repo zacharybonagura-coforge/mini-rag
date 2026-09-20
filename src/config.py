@@ -1,10 +1,7 @@
 import os
 from dataclasses import dataclass
-from enums import (
-    EmbeddingProvider,
-    GenerationProvider,
-    StoreProvider
-)
+
+from enums import EmbeddingProvider, GenerationProvider, StoreProvider
 
 
 @dataclass(frozen=True)

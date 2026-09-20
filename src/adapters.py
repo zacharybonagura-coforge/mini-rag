@@ -1,11 +1,7 @@
 from config import Settings
-from enums import (
-    EmbeddingProvider,
-    GenerationProvider,
-    StoreProvider
-)
 from embeddings.base import EmbeddingAdapter
 from embeddings.ollama import OllamaEmbeddingAdapter
+from enums import EmbeddingProvider, GenerationProvider, StoreProvider
 from generation.base import ModelAdapter
 from generation.ollama import OllamaAdapter
 from store.base import VectorStoreAdapter
