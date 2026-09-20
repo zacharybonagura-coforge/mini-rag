@@ -73,13 +73,13 @@ class PgVectorStoreAdapter:
         with self._connect() as conn, conn.cursor() as cur:
             cur.execute(
                 """
-                    SELECT chunk_id, document, version, section,
-                           section_title, text, embedding,
-                           (embedding <=> %s) AS distance
-                    FROM chunks
-                    ORDER BY embedding <=> %s ASC
-                    LIMIT %s
-                    """,
+                SELECT chunk_id, document, version, section,
+                    section_title, text, embedding,
+                    (embedding <=> %s::vector) AS distance
+                FROM chunks
+                ORDER BY embedding <=> %s::vector ASC
+                LIMIT %s
+                """,
                 (query_embedding, query_embedding, k),
             )
             rows = cur.fetchall()
